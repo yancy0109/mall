@@ -5,11 +5,9 @@ import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.*;
 
 import com.yancy.mall.coupon.entity.CouponEntity;
 import com.yancy.mall.coupon.service.CouponService;
@@ -25,11 +23,27 @@ import com.yancy.common.utils.R;
  * @email yancy0109@foxmail.com
  * @date 2023-02-04 21:38:58
  */
+
 @RestController
 @RequestMapping("coupon/coupon")
+@RefreshScope
 public class CouponController {
     @Autowired
     private CouponService couponService;
+
+    @Value("${coupon.name}")
+    private String testName;
+    @RequestMapping("/test")
+    public R test() {
+        return R.ok().put("name", testName);
+    }
+
+    @RequestMapping("/member/list")
+    public R memberCoupons() {
+        CouponEntity coupon = new CouponEntity();
+        coupon.setCouponName("测试满100减10");
+        return R.ok().put("coupon", Arrays.asList(coupon));
+    }
 
     /**
      * 列表
