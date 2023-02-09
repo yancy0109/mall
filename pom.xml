@@ -29,6 +29,7 @@
         <module>mall-common</module>
         <module>renren-generator</module>
         <module>mall-coupon</module>
+        <module>mall-gateway</module>
     </modules>
 
 
